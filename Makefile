@@ -1,6 +1,3 @@
-export PATH := ./node_modules/.bin:$(PATH)
-
-
 .PHONY: help
 help:
 	@cat $(MAKEFILE_LIST) | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -8,28 +5,27 @@ help:
 
 .PHONY: install
 install:
-	npm install
-	bower install
+	spago install
 
 
 .PHONY: test
 test: ## Run the test watcher
-	pulp test
+	spago test
 
 
 .PHONY: test-watch
 test-watch: ## Run the tests once
-	pulp --watch test
+	spago test --watch
 
 
 .PHONY: build-watch
 build-watch: ## Incrementally compile the project
-	pulp --watch build
+	spago build --watch
 
 
 .PHONY: build
 build: ## Compile the project once
-	pulp build
+	spago build
 
 
 .PHONY: clean

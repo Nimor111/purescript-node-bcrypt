@@ -1,9 +1,9 @@
-const bcrypt = require("bcrypt");
+const bcryptjs = require("bcryptjs");
 
 exports._hash = function(saltRounds) {
   return function(password) {
     return function(onError, onSuccess) {
-      bcrypt.hash(password, saltRounds, function(error, hash) {
+      bcryptjs.hash(password, saltRounds, function(error, hash) {
         if (error) {
           onError(error);
         } else {
@@ -22,7 +22,7 @@ exports._hash = function(saltRounds) {
 exports._compare = function(hash) {
   return function(password) {
     return function(onError, onSuccess) {
-      bcrypt.compare(password, hash, function(error, doesMatch) {
+      bcryptjs.compare(password, hash, function(error, doesMatch) {
         if (error) {
           onError(error);
         } else {

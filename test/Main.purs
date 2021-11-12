@@ -1,27 +1,21 @@
 module Test.Main where
 
+import Effect
+
+import Control.Monad.Free (Free)
+import Crypto.Bcrypt (Hash(..), compare, hash)
 import Prelude (Unit, bind, discard)
-import Control.Monad.Eff (Eff)
-import Control.Monad.Eff.AVar (AVAR)
-import Control.Monad.Eff.Console (CONSOLE)
-import Test.Unit (TestSuite, test)
+import Test.Unit (TestF, test)
 import Test.Unit.Assert as Assert
-import Test.Unit.Console (TESTOUTPUT)
 import Test.Unit.Main (runTest)
-import Crypto.Bcrypt
 
 
-main :: forall e
-  . Eff ( console :: CONSOLE
-        , testOutput :: TESTOUTPUT
-        , avar :: AVAR
-        | e
-        ) Unit
+main :: Effect Unit
 main =
   runTest suites
 
 
-suites :: forall e. TestSuite e
+suites :: Free TestF Unit
 suites = do
   test "Crypo.BCrypt" do
     let password = "hunter7"
